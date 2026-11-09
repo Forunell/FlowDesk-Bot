@@ -1,0 +1,5 @@
+<section class="kpi-row" aria-label="Статистика заявок">
+{% for key,label,glyph in [('new','Нові','folder'),('working','У роботі','clock'),('waiting','Очікують','clock'),('resolved','Вирішені','check')] %}
+<a class="kpi kpi-{{ key }}" href="/admin?status={{ key }}"><span class="kpi-icon">{{ icon(glyph,26) }}</span><div><span>{{ label }}</span><strong data-kpi="{{ key }}">{{ counts[key] }}</strong></div></a>
+{% endfor %}
+<div class="trend-card"><div><strong>Динаміка звернень</strong><small>Останні 7 днів · UTC</small></div><div class="trend-chart"><svg viewBox="0 0 224 56" role="img" aria-label="Звернення за останні 7 днів"><title>{% for point in daily %}{{ point.day }}: {{ point.count }}; {% endfor %}</title><path d="{{ graph_area }}" fill="#c8f4df"/><path d="{{ graph_line }}" fill="none" stroke="#08b55e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span><b>{{ daily|sum(attribute='count') }}</b><small>за тиждень</small></span></div></div></section>

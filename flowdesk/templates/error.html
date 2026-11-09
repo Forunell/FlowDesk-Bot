@@ -1,0 +1,2 @@
+{% extends "base.html" %}{% block breadcrumb %}Перевірка запиту{% endblock %}
+{% block content %}<section class="card confirmation-card"><div class="eyebrow">FLOWDESK / {{ code }}</div><h1>Потрібна ваша увага<span class="accent">.</span></h1><p role="alert">{{ message }}</p><div class="confirmation-actions"><a class="primary" href="/demo">До демо-діалогу</a><a class="secondary" href="/admin">До кабінету</a></div></section>{% endblock %}

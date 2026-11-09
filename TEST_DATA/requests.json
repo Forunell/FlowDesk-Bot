@@ -1,0 +1,8 @@
+[
+ {"name":"Марта Приклад","contact":"marta@example.com","category":"Сервіс техніки","description":"Добрий день! У нашому тестовому відділі перестав працювати принтер. При спробі друку з’являється помилка 0x0000011b. Можете допомогти?","title":"Не працює принтер у відділі","status":"working","priority":"high","assignee":"operator"},
+ {"name":"Данило Тестовий","contact":"danylo@example.com","category":"Налаштування мережі","description":"Вигаданий офіс: часті розриви з’єднання Wi-Fi на третьому поверсі.","title":"Проблеми з Wi-Fi","status":"new","priority":"medium","assignee":""},
+ {"name":"Софія Демонстраційна","contact":"sofia@example.com","category":"Налаштування мережі","description":"Не вдається підключитися до корпоративної мережі. Навчальний приклад.","title":"Немає доступу до VPN","status":"waiting","priority":"high","assignee":"admin"},
+ {"name":"Остап Приклад","contact":"ostap@example.com","category":"Консультація","description":"Потрібен доступ для нового вигаданого співробітника. Доступ налаштовано.","title":"Доступ до CRM","status":"resolved","priority":"low","assignee":"operator"},
+ {"name":"Лада Тестова","contact":"lada@example.com","category":"Комп’ютерна допомога","description":"Потрібно оновити офісні програми на тестовому комп’ютері та перевірити налаштування.","title":"Оновлення робочого ПЗ","status":"new","priority":"medium","assignee":""},
+ {"name":"Тарас Демо","contact":"taras@example.com","category":"Комп’ютерна допомога","description":"Демонстраційний запит: налаштувати відеозв’язок і перевірити звук перед зустріччю.","title":"Налаштування відеозв’язку","status":"working","priority":"low","assignee":"operator"}
+]

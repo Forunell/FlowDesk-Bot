@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="page-heading"><div><div class="eyebrow">ВІД ПЕРШОГО «ПРИВІТ» ДО ЗАЯВКИ</div><h1>Сервіс починається<br>з розмови<span class="accent">.</span></h1><p class="lede">Спробуйте шлях клієнта — коротко, зрозуміло, без зайвих кроків.</p></div><div class="heading-tag"><span class="live-dot"></span> Працює без інтернету</div></section>
+<div class="demo-grid">
+  <section class="chat-panel" aria-label="Емулятор діалогу">
+    <div class="chat-header"><div class="bot-avatar" aria-hidden="true">f↗</div><div><h2>Помічник FlowDesk</h2><p><span class="live-dot"></span> Браузерний емулятор · не Telegram</p></div><span class="chat-symbol" aria-hidden="true">✳</span></div>
+    <div class="chat-transcript" id="transcript" role="log" aria-label="Історія повідомлень" tabindex="0">
+      <div class="chat-date">ВАШ ДІАЛОГ ІЗ СЕРВІСОМ</div>
+      {% for message in state.history %}<div class="message {{ message.role }}" {% if loop.last %}id="latest"{% endif %}><span class="message-author">{{ 'FLOWDESK' if message.role == 'bot' else 'ВИ' }}</span><div class="bubble">{{ message.text }}</div></div>{% endfor %}
+    </div>
+    <div class="chat-controls">
+      {% if options %}<form method="post" action="/demo/message" class="quick-replies"><input type="hidden" name="csrf" value="{{ csrf }}">{% for option in options %}<button name="message" value="{{ option }}" class="{{ 'primary' if option in ['/start','Підтвердити'] else 'chip' }}" type="submit">{{ 'Почати заявку' if option == '/start' else option }}{% if option == '/start' %}<span aria-hidden="true">↗</span>{% endif %}</button>{% endfor %}</form>{% endif %}
+      {% if state.step not in ['idle','done','confirm','edit','category'] %}<form method="post" action="/demo/message" class="message-form"><input type="hidden" name="csrf" value="{{ csrf }}"><label class="sr-only" for="message">Ваше повідомлення</label><textarea id="message" name="message" rows="2" maxlength="2000" placeholder="{{ 'Наприклад: demo@example.com' if state.step == 'contact' else 'Напишіть повідомлення…' }}" required autofocus></textarea><button class="send" type="submit" aria-label="Надіслати повідомлення">↑</button></form>{% endif %}
+      <div class="chat-bottom"><span>⌁ Лише вигадані дані для демо</span>{% if state.step not in ['idle','done','confirm'] %}<form method="post" action="/demo/message"><input type="hidden" name="csrf" value="{{ csrf }}"><button class="text-button" name="message" value="Скасувати">Скасувати заявку</button></form>{% endif %}</div>
+    </div>
+  </section>
+  <aside class="demo-aside">
+    <section class="journey card"><div class="section-kicker">ПРОСТИЙ ШЛЯХ</div><h2>Кілька кроків.<br> Усе на своїх місцях.</h2><ol class="steps">{% for label in ['Послуга','Ваше ім’я','Спосіб зв’язку','Деталі запиту','Підтвердження'] %}{% set key = (fields | list + ['confirm'])[loop.index0] %}<li class="{% if state.step == key %}current{% elif key in state.data or state.step == 'done' %}complete{% endif %}"><span class="step-number">{{ '%02d'|format(loop.index) }}</span><span>{{ label }}</span>{% if key in state.data or state.step == 'done' %}<span class="step-check" aria-label="Заповнено">✓</span>{% endif %}</li>{% endfor %}</ol></section>
+    <section class="mint-card"><div class="orb" aria-hidden="true">↗</div><h3>Одна розмова.<br>Жодної загубленої заявки.</h3><p>Після підтвердження звернення з’явиться в кабінеті адміністратора з власним номером.</p><a class="inline-link" href="/admin">Перейти до заявок <span aria-hidden="true">→</span></a></section>
+    <p class="aside-caption">Це демонстрація для вигаданої компанії «Обрій Сервіс». Вона не надсилає повідомлень у Telegram.</p>
+  </aside>
+</div>
+{% endblock %}

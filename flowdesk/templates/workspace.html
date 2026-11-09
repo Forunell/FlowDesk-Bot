@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% from "icons.html" import icon %}
+{% macro hidden() %}<input type="hidden" name="csrf" value="{{ csrf }}">{% endmacro %}
+{% macro change_fields() %}{{ hidden() }}<input type="hidden" name="version" value="{{ item.version }}">{% endmacro %}
+{% block title %}{{ 'FD-%04d'|format(item.id) if selected and item else 'Звернення клієнтів' }} — FlowDesk{% endblock %}
+{% block breadcrumb %}Заявки <span>/</span> {{ 'Налаштування' if section == 'settings' else 'Огляд' if section == 'overview' else 'Звернення клієнтів' }}{% endblock %}
+{% block content %}
+<div class="workspace-page {% if selected %}has-selection{% endif %}" data-workspace>
+<section class="ws-heading"><div><h1>{{ 'Налаштування простору' if section == 'settings' else 'Огляд роботи команди' if section == 'overview' else 'Звернення клієнтів' }}</h1><p>Керуйте запитами, спілкуйтеся з клієнтами та вирішуйте задачі швидше.</p></div><div class="heading-actions"><span class="demo-pill">{{ '⚗ ДЕМО — тестові дані' if demo_only else 'ЛОКАЛЬНИЙ СЕРВЕР · Telegram' }}</span><a class="primary" href="/admin/new">{{ icon('plus') }} Нова заявка</a></div></section>
+{% if notice %}<div class="alert success" role="status">{{ notice }}</div>{% endif %}
+{% include 'partials/kpis.html' %}
+{% if section == 'settings' %}
+{% include 'partials/settings.html' %}
+{% elif section == 'overview' %}
+{% include 'partials/overview.html' %}
+
+{% else %}
+{% include 'partials/filters.html' %}
+<div class="desk-grid">
+{% include 'partials/ticket_list.html' %}
+
+{% if item %}
+{% include 'partials/ticket_detail.html' %}
+{% include 'partials/client_panel.html' %}
+
+{% else %}<section class="surface empty-detail"><div>{{ icon('chat',42) }}<h2>Усе починається зі звернення</h2><p>Додайте демо-дані або створіть заявку, щоб розпочати роботу.</p><a href="/demo" class="secondary">Відкрити демо-діалог →</a></div></section>{% endif %}
+</div>
+{% if role == 'admin' %}<div class="workspace-tools"><form method="post" action="/admin/seed">{{ hidden() }}<button class="text-button">+ Тестові заявки</button></form><a href="/admin/clear">Очистити демо-дані</a><span>Синтетичні дані · зберігаються на цьому комп’ютері</span></div>{% endif %}
+{% endif %}</div>
+{% endblock %}
+
